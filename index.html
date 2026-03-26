@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>Loot Store - متجاوب بالكامل</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: #fff;
+}
+
+/* Header */
+header {
+    background: linear-gradient(90deg, #1cb5e0, #000851);
+    padding: 20px;
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+/* Container & Products */
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.product {
+    background: #121b2c;
+    border-radius: 15px;
+    padding: 25px 15px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0,198,255,0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+    min-height: 160px; /* زيادة ارتفاع المنتج */
+}
+.product:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,198,255,0.5);
+}
+.product h3 {
+    font-size: 20px;
+    color: #00fff7;
+    margin-bottom: 8px;
+}
+.product .price {
+    font-size: 18px;
+    color: #ffd700;
+    margin-bottom: 12px;
+}
+.product button {
+    background: #00fff7;
+    color: #000;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+}
+.product button:hover {
+    background: #00e0d1;
+    transform: scale(1.05);
+}
+
+/* Cart Button */
+#cartBtn {
+    position: fixed;
+    top: 50%;
+    right: 10px;
+    background: #ffd700;
+    color: #000;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 0 15px rgba(255,215,0,0.6);
+    transition: transform 0.3s;
+}
+#cartBtn:hover { transform: scale(1.2); }
+
+/* Cart Sidebar */
+.cart {
+    position: fixed;
+    right: -100%;
+    top: 0;
+    width: 400px;
+    max-width: 90%;
+    height: 100%;
+    background: #0f1c2c;
+    box-shadow: -5px 0 25px rgba(0,198,255,0.3);
+    padding: 20px;
+    overflow-y: auto;
+    transition: right 0.4s;
+    z-index: 999;
+}
+.cart.show { right: 0; }
+.cart h2 { color: #00fff7; text-align: center; font-size: 24px; }
+.cart ul { list-style: none; padding: 0; margin: 10px 0; }
+.cart li {
+    padding: 12px;
+    margin: 8px 0;
+    background: #1a2a40;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+}
+.cart li button {
+    background: #ff4b2b;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 6px 10px;
+    cursor: pointer;
+}
+.cart #total {
+    font-size: 18px;
+    margin-top: 15px;
+    text-align: center;
+    color: #ffd700;
+}
+.cart .whatsapp {
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    background: #25D366;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.cart .whatsapp:hover { background: #1ebe57; }
+
+/* Player Form */
+#playerForm { margin-top: 15px; display: flex; flex-direction: column; gap: 10px; }
+#playerForm input, #playerForm select { padding: 10px; border-radius: 8px; border: none; font-size: 16px; }
+
+/* Social Links */
+.social { text-align: center; padding: 15px; background: #0f1c2c; }
+.social a { color: #00fff7; text-decoration: none; font-weight: bold; margin: 0 10px; font-size: 16px; }
+.social a:hover { color: #ffd700; }
+
+/* Responsive */
+@media (max-width: 768px){
+    header { font-size: 28px; padding: 18px; }
+    .container { grid-template-columns: 1fr; gap: 15px; padding: 15px; }
+    .product { padding: 20px; min-height: 160px; }
+    .product h3 { font-size: 18px; }
+    .product .price { font-size: 16px; }
+    .product button { font-size: 16px; padding: 10px 15px; }
+    .cart { width: 90%; }
+    .cart h2 { font-size: 22px; }
+    .cart li { font-size: 16px; }
+    .cart #total { font-size: 18px; }
+    .cart .whatsapp { font-size: 16px; padding: 12px; }
+    #playerForm input, #playerForm select { font-size: 16px; padding: 10px; }
+}
+</style>
+</head>
+<body>
+
+<header>🔥 Loot Store</header>
+
+<div class="container">
+    <div class="product"><h3>60 UC</h3><p class="price">0.400 بيسه</p><button onclick="addToCart('60 UC',0.4)">إضافة</button></div>
+    <div class="product"><h3>325 UC</h3><p class="price">1.750 ريال</p><button onclick="addToCart('325 UC',1.75)">إضافة</button></div>
+    <div class="product"><h3>660 UC</h3><p class="price">3.400 ريال</p><button onclick="addToCart('660 UC',3.4)">إضافة</button></div>
+    <div class="product"><h3>1800 UC</h3><p class="price">8.750 ريال</p><button onclick="addToCart('1800 UC',8.75)">إضافة</button></div>
+    <div class="product"><h3>3850 UC</h3><p class="price">17.100 ريال</p><button onclick="addToCart('3850 UC',17.1)">إضافة</button></div>
+    <div class="product"><h3>8100 UC</h3><p class="price">34.990 ريال</p><button onclick="addToCart('8100 UC',34.99)">إضافة</button></div>
+    <div class="product"><h3>16200 UC</h3><p class="price">68.100 ريال</p><button onclick="addToCart('16200 UC',68.1)">إضافة</button></div>
+    <div class="product"><h3>24300 UC</h3><p class="price">104.200 ريال</p><button onclick="addToCart('24300 UC',104.2)">إضافة</button></div>
+    <div class="product"><h3>32400 UC</h3><p class="price">141.990 ريال</p><button onclick="addToCart('32400 UC',141.99)">إضافة</button></div>
+    <div class="product"><h3>40500 UC</h3><p class="price">175.500 ريال</p><button onclick="addToCart('40500 UC',175.5)">إضافة</button></div>
+    <div class="product"><h3>48600 UC</h3><p class="price">203.200 ريال</p><button onclick="addToCart('48600 UC',203.2)">إضافة</button></div>
+    <div class="product"><h3>81000 UC</h3><p class="price">345.990 ريال</p><button onclick="addToCart('81000 UC',345.99)">إضافة</button></div>
+</div>
+
+<button id="cartBtn">🛒</button>
+
+<div class="cart" id="cartSidebar">
+<h2>🧺 السلة</h2>
+<ul id="cart"></ul>
+<h3 id="total">المجموع: 0 ريال</h3>
+
+<div id="playerForm">
+    <input type="text" id="playerID" placeholder="ادخل ID اللاعب">
+    <input type="text" id="region" placeholder="اختر منطقتك (Oman, KSA, UAE, Kuwait)">
+    <select id="currency">
+        <option value="">اختر العملة</option>
+        <option value="OMR">OMR</option>
+        <option value="SAR">SAR</option>
+        <option value="AED">AED</option>
+        <option value="KWD">KWD</option>
+    </select>
+</div>
+
+<button class="whatsapp" onclick="orderNow()">إتمام الطلب</button>
+</div>
+
+<div class="social">
+    تواصل معنا: 
+    <a href="https://www.instagram.com/pg.mrco" target="_blank">Instagram: pg.mrco</a> |
+    <a href="https://wa.me/96894772992" target="_blank">WhatsApp: 94772992</a>
+</div>
+
+<script>
+let cart = [];
+let total = 0;
+const cartSidebar = document.getElementById("cartSidebar");
+document.getElementById("cartBtn").addEventListener("click", ()=>{
+    cartSidebar.classList.toggle("show");
+});
+
+function addToCart(name, price){
+    cart.push({name, price});
+    total += price;
+    updateCart();
+}
+
+function removeFromCart(index){
+    total -= cart[index].price;
+    cart.splice(index,1);
+    updateCart();
+}
+
+function updateCart(){
+    const list = document.getElementById("cart");
+    list.innerHTML = "";
+    cart.forEach((item,i)=>{
+        const li = document.createElement("li");
+        li.innerHTML = `${item.name} - ${item.price.toFixed(3)} <button onclick="removeFromCart(${i})">إلغاء</button>`;
+        list.appendChild(li);
+    });
+    document.getElementById("total").textContent = "المجموع: " + total.toFixed(3) + " ريال";
+}
+
+function orderNow(){
+    if(cart.length === 0){
+        alert("السلة فارغة!");
+        return;
+    }
+    const playerID = document.getElementById("playerID").value || "لم يتم إدخال ID";
+    const region = document.getElementById("region").value || "لم يتم إدخال المنطقة";
+    const currency = document.getElementById("currency").value || "";
+
+    let message = `🔥 طلب شدات 🔥
+ID اللاعب: ${playerID}
+المنطقة: ${region}
+العملة: ${currency}
+الطلبات:
+${cart.map(x=>x.name).join("\n")}
+المجموع: ${total.toFixed(3)} ${currency}
+
+⏳ يرجى الانتظار حتى 12 ساعة كحد أقصى ليصلك الشدات
+💰 الرجاء تحويل المبلغ على الرقم 98891327 وإرسال الإيصال
+`;
+
+    window.open("https://wa.me/96894772992?text=" + encodeURIComponent(message));
+}
+</script>
+
+</body>
+</html>
